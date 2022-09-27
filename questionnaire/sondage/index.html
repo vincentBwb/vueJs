@@ -1,0 +1,211 @@
+<html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+
+    <title>VueJS Quiz Sample</title>
+    <meta name="description" content="VueJS Quiz">
+</head>
+
+<body>
+    <div id="app">
+        <div class="container">
+            <div class="jumbotron mt-3">
+                <h1 class="mb-5">{{ quiz.title }}</h1>
+                <hr>
+                <p v-if="errors[questionIndex]" class="alert alert-danger">
+                    {{ error }}
+                </p>
+                <div v-for="(question, index) in quiz.questions">
+                    <div v-show="index === questionIndex">
+
+                        <h4 class="mt-5 mb-3">{{ question.text }}</h4>
+
+                        <div v-for="answer in question.answers" class="form-check">
+                            <label class="form-check-label">
+                                <input class="form-check-input" type="radio" :value="answer.value" :name="index"
+                                    v-model="responses[index]">
+                                {{answer.text}}
+                            </label>
+                        </div>
+
+                        <div class="mt-5">
+                            <button class="btn btn-primary" v-if="questionIndex > 0" @click="prev">
+                                prev
+                            </button>
+                            <button class="btn btn-secondary" @click="next">
+                                next
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div v-show="questionIndex === quiz.questions.length">
+                    <h3>Your Results</h3>
+                    <p>
+                        You are: {{ score() }}
+                    </p>
+
+                    <button class="btn btn-success" @click="playAgain">
+                        Play Again!
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://vuejs.org/js/vue.js">
+        // initialisation de vue 
+    </script>
+
+    <script>
+        "use strict";
+        let quiz = {
+            title: "Mon joli questionnaire !",
+            questions: [
+                {
+                    text: 'Vous préférez ?',
+                    answers: [
+                        {
+                            text: 'les légumes',
+                            value: 1
+                        },
+                        {
+                            text: 'la viande',
+                            value: 2
+                        },
+                        {
+                            text: 'les kinder',
+                            value: 3
+                        },
+                        {
+                            text: 'les chats',
+                            value: 4
+                        }
+                    ]
+                },
+                {
+                    text: 'Vous allez voter pour ?',
+                    answers: [
+                        {
+                            text: 'Hildalgo',
+                            value: 1
+                        },
+                        {
+                            text: 'Zemmour',
+                            value: 2
+                        },
+                        {
+                            text: 'laLepeniteAigue',
+                            value: 3
+                        },
+                        {
+                            text: 'leFacteurDuCoin',
+                            value: 4
+                        }
+                    ]
+                },
+                {
+                    text: 'Vous préférez ?',
+                    answers: [
+                        {
+                            text: 'php',
+                            value: 1
+                        },
+                        {
+                            text: 'js',
+                            value: 2
+                        },
+                        {
+                            text: 'python',
+                            value: 3
+                        },
+                        {
+                            text: 'assembleur',
+                            value: 4
+                        },
+                        {
+                            text: 'aucun',
+                            value:5
+                        }
+                    ]
+                },
+                { 
+                    text: 'Si vous étiez un volatile ?',
+                    answers: [
+                        {
+                            text: 'une grosse buse',
+                            value: 1
+                        },
+                        {
+                            text: 'un vilain vautour',
+                            value:2
+                        },
+                        {
+                            text: 'un aigle magestueux',
+                            value: 3
+                        },
+                        {
+                            text: 'un dodo ronfleur',
+                            value: 4
+                        }
+                    ]
+                },
+                { // Plutot : entendre ca que d'etre sourd / mourir debout que vivre allongé
+                    text: 'Plutot ?',
+                    answers: [
+                        {
+                            text: 'entendre ça que d\'être sourd',
+                            value: 1
+                        },
+                        {
+                            text: 'mourir debout que vivre allongé ',
+                            value: 2
+                        }
+                    ]
+                }
+            ]
+        };
+
+        var app = new Vue({
+            el: "#app",
+            data: {
+                quiz: quiz,
+                questionIndex: 0,
+                responses: [],
+                errors: [],
+                error: ''
+            },
+
+            methods: {
+                prev: function () {
+                    this.questionIndex--;
+                },
+
+                next: function () {
+                    if (this.responses[this.questionIndex] === undefined) {
+                        this.errors[this.questionIndex] = 1;
+                        this.error = 'svp selectionnez une réponse';
+                    }
+                    else {
+                        this.errors[this.questionIndex] = 0;
+                        this.questionIndex++;
+                    }
+                },
+
+                score: function () {
+                    //score = 0;
+                    //quiz.questions[0].answers.value = 2 
+                },
+
+                playAgain: function () {
+                    this.questionIndex = 0;
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,28 @@
+<template>
+    <div class="parent"> <!-- @my-message reçoit le emit  -->
+        <ChildComponent @my-message="captureMyMessage"></ChildComponent>
+            {{ "message recu : " + dial }}
+    </div>
+</template>
+
+<script>
+import Child from "@/enfant-parent/ChildComponent.vue";
+
+export default {
+    name: "parent",
+    data() {
+        return {
+            dial: "",
+        };
+    },
+    methods: {
+        captureMyMessage(mess) {
+            console.log(mess);
+            this.dial= mess;
+        }
+    },
+    components: {
+        Child,
+    },
+};
+</script>
