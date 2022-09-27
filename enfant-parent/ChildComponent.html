@@ -1,0 +1,18 @@
+<script>
+    export default {
+        name: Child ,
+        data() {
+            return {
+                message: "ceci est mon message enfant" ,
+            }
+        },
+        methods: {
+            sendMessageToParent() {
+                this.$emit("my-message", this.message);
+            }
+        },
+        mounted() {
+            this.sendMessageToParent();
+        },
+    };
+</script>

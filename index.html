@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="vue.js"></script>
+</head>
+
+<body>
+    <div id="tuto">
+        <button-clique v-bind:compte-initial="0"></button-clique>
+    </div>
+
+    <script>
+        Vue.component('button-clique', {
+            props: ["compteInitial"],
+            data: () => ({
+                compte: 0,
+            }),
+            template: `<button v-on:click="auClic">Cliqué {{ compte }} fois</button>`,
+            computed: {
+                compteFoisDeux() {
+                    return this.compte * 2;
+                }
+            },
+            watch: {
+                compte(nouvelleValeur, ancienneValeur) {
+                    console.log(`La valeur de compte est changée de ${ancienneValeur} en ${nouvelleValeur}.`);
+                }
+            },
+            methods: {
+                auClic() {
+                    this.compte += 1;
+                }
+            },
+            mounted() {
+                this.compte = this.compteInitial;
+            }
+        });
+
+        new Vue({
+            el: '#tuto',
+        });
+    </script>
+</body>
+
+</html>
